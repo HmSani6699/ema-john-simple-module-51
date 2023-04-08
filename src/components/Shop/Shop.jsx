@@ -3,6 +3,9 @@ import { addToDb, getShoppingCart } from '../../utilities/fakedb';
 import Cart from '../Cart/Cart';
 import Product from '../Product/Product';
 import './Shop.css';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
@@ -14,14 +17,14 @@ const Shop = () => {
             .then(data => setProducts(data))
     }, []);
 
-    useEffect( () =>{
+    useEffect(() => {
         const storedCart = getShoppingCart();
         const savedCart = [];
         // step 1: get id of the addedProduct
-        for(const id in storedCart){
+        for (const id in storedCart) {
             // step 2: get product from products state by using id
             const addedProduct = products.find(product => product.id === id)
-            if(addedProduct){
+            if (addedProduct) {
                 // step 3: add quantity
                 const quantity = storedCart[id];
                 addedProduct.quantity = quantity;
@@ -41,11 +44,11 @@ const Shop = () => {
         // if product doesn't exist in the cart, then set quantity = 1
         // if exist update quantity by 1
         const exists = cart.find(pd => pd.id === product.id);
-        if(!exists){
+        if (!exists) {
             product.quantity = 1;
-            newCart= [...cart, product]
+            newCart = [...cart, product]
         }
-        else{
+        else {
             exists.quantity = exists.quantity + 1;
             const remaining = cart.filter(pd => pd.id !== product.id);
             newCart = [...remaining, exists];
@@ -67,7 +70,16 @@ const Shop = () => {
                 }
             </div>
             <div className="cart-container">
-                <Cart cart={cart}></Cart>
+                <Cart cart={cart}>
+                    <div className='proceed-review-btn-container'>
+                        <Link to="/order">
+                            <button className='proceed-and-review-btn'>
+                                <span>Order review</span>
+                                <FontAwesomeIcon icon={faArrowRight} />
+                            </button>
+                        </Link>
+                    </div>
+                </Cart>
             </div>
         </div>
     );
