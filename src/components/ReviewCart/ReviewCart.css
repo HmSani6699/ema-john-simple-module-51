@@ -4,6 +4,9 @@
     border: 1px solid #95A0A7;
     border-radius: 8px;
     margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .review-details {
@@ -38,4 +41,17 @@
 
 .author-text {
     color: #FF9900;
+}
+
+.delete-icon {
+    margin-right: 23px;
+    height: 55px;
+    width: 55px;
+    background: rgba(235, 87, 87, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 27px;
+    color: #EB5757;
 }
