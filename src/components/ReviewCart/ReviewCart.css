@@ -5,3 +5,37 @@
     border-radius: 8px;
     margin-bottom: 25px;
 }
+
+.review-details {
+    display: flex;
+    align-items: center;
+}
+
+.review-details img {
+    height: 91px;
+    width: 91px;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.review-details p {
+    margin: 5px 0px;
+}
+
+.review-title {
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 25px;
+    letter-spacing: 0.0015em;
+}
+
+.review-price,
+.review-quantity {
+    font-size: 15px;
+    line-height: 18px;
+    letter-spacing: 0.0025em;
+}
+
+.author-text {
+    color: #FF9900;
+}
