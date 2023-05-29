@@ -7,7 +7,7 @@ const loadedCartProduct = async () => {
     const storedCart = getShoppingCart();
     const storedProduct = [];
     for (const id in storedCart) {
-        const getProduct = products.find(product => product.id === id);
+        const getProduct = products.find(product => product._id === id);
         if (getProduct) {
             const quantity = storedCart[id];
             getProduct.quantity = getProduct.quantity + quantity;
