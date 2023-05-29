@@ -1,7 +1,7 @@
 import { getShoppingCart } from "../utilities/fakedb";
 
 const loadedCartProduct = async () => {
-    const loadProduct = await fetch('products.json');
+    const loadProduct = await fetch('http://localhost:5000/products');
     const products = await loadProduct.json();
 
     const storedCart = getShoppingCart();
