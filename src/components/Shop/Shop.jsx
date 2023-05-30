@@ -10,7 +10,18 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 const Shop = () => {
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
-    const {totalProducts}=useLoaderData()
+
+
+    // pagination start
+    const {totalProducts}=useLoaderData();
+    console.log(totalProducts);
+
+    const itemPerPage = 10;
+
+    const totalPage =Math.ceil(totalProducts/itemPerPage);
+
+    const pageNumbers = [...Array(totalPage).keys()];
+    console.log(pageNumbers);
 
     useEffect(() => {
         fetch('http://localhost:5000/products')
@@ -60,6 +71,7 @@ const Shop = () => {
     }
 
     return (
+        <>
         <div className='shop-container'>
             <div className="products-container">
                 {
@@ -83,6 +95,12 @@ const Shop = () => {
                 </Cart>
             </div>
         </div>
+        <div className='pagination'>
+             {
+                pageNumbers.map(number=><button key={number}>{number}</button>)
+             }
+        </div>
+        </>
     );
 };
 
