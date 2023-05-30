@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 const Shop = () => {
-    const [currentPage,setCurrentPage]= useState(0)
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
 
@@ -16,19 +15,34 @@ const Shop = () => {
     // pagination start
     const { totalProducts } = useLoaderData();
     console.log(totalProducts);
-
-    const itemPerPage = 10;
+    const [currentPage, setCurrentPage] = useState(0);
+    const [itemPerPage, setItemPerPage] = useState(10);
 
     const totalPage = Math.ceil(totalProducts / itemPerPage);
 
     const pageNumbers = [...Array(totalPage).keys()];
-    console.log(pageNumbers);
+
+    const options = [5, 10, 20]
+    const handleSelectChange = (event) => {
+        setItemPerPage(parseInt(event.target.value));
+        setCurrentPage(0)
+    }
 
     useEffect(() => {
-        fetch('http://localhost:5000/products')
+        fetch(`http://localhost:5000/products?page=${currentPage}&limit=${itemPerPage}`)
             .then(res => res.json())
             .then(data => setProducts(data))
-    }, []);
+    }, [currentPage,itemPerPage]);
+
+    // pagination end
+
+    //------update to pagition ---------//
+    
+    // useEffect(() => {
+    //     fetch(`http://localhost:5000/products`)
+    //         .then(res => res.json())
+    //         .then(data => setProducts(data))
+    // }, []);
 
     useEffect(() => {
         const storedCart = getShoppingCart();
@@ -102,10 +116,20 @@ const Shop = () => {
                 <p>Current page {currentPage}</p>
                 {
                     pageNumbers.map(number => <button
-                         key={number}
-                         onClick={()=>setCurrentPage(number)}
-                         >{number}</button>)
+                        key={number}
+                        onClick={() => setCurrentPage(number)}
+                        className={currentPage===number?'selectad':''}
+                    >{number}</button>)
                 }
+
+
+                <select value={itemPerPage} onChange={handleSelectChange}>
+                    {
+                        options.map(option => (
+                            <option key={option} value={option}>{option}</option>
+                        ))
+                    }
+                </select>
             </div>
         </>
     );
