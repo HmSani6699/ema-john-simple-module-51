@@ -8,17 +8,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 const Shop = () => {
+    const [currentPage,setCurrentPage]= useState(0)
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
 
 
     // pagination start
-    const {totalProducts}=useLoaderData();
+    const { totalProducts } = useLoaderData();
     console.log(totalProducts);
 
     const itemPerPage = 10;
 
-    const totalPage =Math.ceil(totalProducts/itemPerPage);
+    const totalPage = Math.ceil(totalProducts / itemPerPage);
 
     const pageNumbers = [...Array(totalPage).keys()];
     console.log(pageNumbers);
@@ -72,34 +73,40 @@ const Shop = () => {
 
     return (
         <>
-        <div className='shop-container'>
-            <div className="products-container">
+            <div className='shop-container'>
+                <div className="products-container">
+                    {
+                        products.map(product => <Product
+                            key={product._id}
+                            product={product}
+                            handleAddToCart={handleAddToCart}
+                        ></Product>)
+                    }
+                </div>
+                <div className="cart-container">
+                    <Cart cart={cart}>
+                        <div className='proceed-review-btn-container'>
+                            <Link to="/order">
+                                <button className='proceed-and-review-btn'>
+                                    <span>Order review</span>
+                                    <FontAwesomeIcon icon={faArrowRight} />
+                                </button>
+                            </Link>
+                        </div>
+                    </Cart>
+                </div>
+            </div>
+
+            {/* pagination section */}
+            <div className='pagination'>
+                <p>Current page {currentPage}</p>
                 {
-                    products.map(product => <Product
-                        key={product._id}
-                        product={product}
-                        handleAddToCart={handleAddToCart}
-                    ></Product>)
+                    pageNumbers.map(number => <button
+                         key={number}
+                         onClick={()=>setCurrentPage(number)}
+                         >{number}</button>)
                 }
             </div>
-            <div className="cart-container">
-                <Cart cart={cart}>
-                    <div className='proceed-review-btn-container'>
-                        <Link to="/order">
-                            <button className='proceed-and-review-btn'>
-                                <span>Order review</span>
-                                <FontAwesomeIcon icon={faArrowRight} />
-                            </button>
-                        </Link>
-                    </div>
-                </Cart>
-            </div>
-        </div>
-        <div className='pagination'>
-             {
-                pageNumbers.map(number=><button key={number}>{number}</button>)
-             }
-        </div>
         </>
     );
 };
